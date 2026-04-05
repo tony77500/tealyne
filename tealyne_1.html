@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tealyne — Bubble Tea · Chelles</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5EDE0;
+    --cream2: #EDE0CC;
+    --warm: #E2CEB0;
+    --beige: #C9AF90;
+    --tan: #A8885E;
+    --red: #B83025;
+    --red-hover: #9A2218;
+    --dark: #2A1508;
+    --mid: #5C3820;
+    --pearl-light: #E8D5C0;
+    --pearl-mid: #C49E78;
+    --pearl-dark: #8B6340;
+    --text: #3A2010;
+    --text-soft: #7A5035;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── BUBBLE BACKGROUND ── */
+  #bubble-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .pearl {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatPearl linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes floatPearl {
+    0%   { transform: translateY(110vh) scale(0.85) translateX(0px); opacity: 0; }
+    8%   { opacity: 1; }
+    50%  { transform: translateY(50vh) scale(1) translateX(15px); }
+    80%  { opacity: 0.85; }
+    100% { transform: translateY(-10vh) scale(1.1) translateX(-10px); opacity: 0; }
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 56px;
+    background: rgba(245, 237, 224, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--warm);
+    transition: padding 0.4s;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-logo em {
+    color: var(--red);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--red);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--red);
+    border: none;
+    padding: 10px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--red-hover);
+    transform: translateY(-1px);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 140px 24px 100px;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    max-width: 780px;
+    animation: heroReveal 1.4s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes heroReveal {
+    0%  { opacity: 0; transform: translateY(30px); }
+    100%{ opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    animation-delay: 0.2s;
+  }
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--red);
+    opacity: 0.6;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(58px, 9vw, 96px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.02;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+  }
+  .hero-title em {
+    color: var(--red);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--tan);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+
+  .hero-desc {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--red);
+    border: none;
+    padding: 16px 40px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(184,48,37,0.25);
+  }
+
+  .btn-outline {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--dark);
+    background: transparent;
+    border: 1.5px solid var(--beige);
+    padding: 16px 40px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover {
+    border-color: var(--red);
+    color: var(--red);
+    transform: translateY(-2px);
+  }
+
+  /* ── DECORATIVE FRAME ── */
+  .frame-deco {
+    position: absolute;
+    top: 130px; left: 50%;
+    transform: translateX(-50%);
+    width: min(700px, 90vw);
+    height: calc(100% - 180px);
+    border: 1px solid rgba(168,136,94,0.18);
+    pointer-events: none;
+  }
+  .frame-deco::before, .frame-deco::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--red);
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .frame-deco::before {
+    top: -1px; left: -1px;
+    border-width: 2px 0 0 2px;
+  }
+  .frame-deco::after {
+    bottom: -1px; right: -1px;
+    border-width: 0 2px 2px 0;
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--beige);
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--beige), transparent);
+  }
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTION SHARED ── */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 600;
+    color: var(--dark);
+    line-height: 1.15;
+  }
+
+  .section-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--red);
+  }
+
+  /* ── BAND ── */
+  .band {
+    background: var(--red);
+    padding: 22px 56px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .band-track {
+    display: flex;
+    gap: 60px;
+    animation: bandScroll 20s linear infinite;
+  }
+  .band-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  .band-dot {
+    width: 6px; height: 6px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  @keyframes bandScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── ABOUT / AMBIANCE ── */
+  .about {
+    padding: 120px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-visual { position: relative; display:flex; align-items:center; justify-content:center; }
+
+  .about-badge {
+    position: absolute;
+    bottom: -24px; right: -24px;
+    width: 96px; height: 96px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+    border: 3px solid var(--cream);
+  }
+  .about-badge strong {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0;
+    display: block;
+  }
+
+  .about-content { padding: 20px 0; }
+  .about-content .section-title { margin-bottom: 24px; }
+  .about-text {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.9;
+    margin-bottom: 32px;
+  }
+
+  .about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .feature-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .feature-icon {
+    width: 36px; height: 36px;
+    background: var(--cream2);
+    border: 1px solid var(--warm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .feature-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+  .feature-text strong {
+    display: block;
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  /* ── MENU SECTION ── */
+  .menu-section {
+    padding: 120px 56px;
+    background: var(--cream2);
+  }
+
+  .menu-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--warm);
+  }
+  .menu-tab {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    background: none;
+    border: none;
+    padding: 14px 32px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .menu-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 0; height: 2px;
+    background: var(--red);
+    transition: width 0.3s;
+  }
+  .menu-tab.active { color: var(--red); }
+  .menu-tab.active::after { width: 100%; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .menu-card {
+    background: var(--cream);
+    padding: 32px 28px;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+    border: 1px solid transparent;
+  }
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(42,21,8,0.08);
+    border-color: var(--warm);
+  }
+
+  .menu-card-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+
+  .menu-card-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .menu-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .menu-card-accent {
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px;
+    height: 40px;
+    background: var(--red);
+  }
+
+  /* ── BANH MI SECTION ── */
+  .banhmi-section {
+    padding: 120px 56px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .banhmi-visual {
+    position: sticky;
+    top: 100px;
+  }
+
+  .banhmi-plate { position:relative; }
+
+  .banhmi-menu { padding-top: 20px; }
+  .banhmi-menu .section-title { margin-bottom: 8px; }
+  .banhmi-menu .section-label { margin-bottom: 8px; }
+
+  .banhmi-intro {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .price-header {
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 64px);
+    gap: 4px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--warm);
+    margin-bottom: 4px;
+  }
+  .price-header span {
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--beige);
+    text-align: center;
+  }
+  .price-header span:first-child { text-align: left; }
+
+  .banhmi-item {
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 64px);
+    gap: 4px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(201,175,144,0.3);
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .banhmi-item:hover {
+    background: rgba(201,175,144,0.08);
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 -8px;
+  }
+
+  .banhmi-item-info {}
+  .banhmi-item-name {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .banhmi-item-comp {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  .banhmi-price {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--mid);
+    text-align: center;
+    align-self: start;
+    padding-top: 2px;
+  }
+  .banhmi-price.highlight {
+    font-weight: 600;
+    color: var(--red);
+  }
+
+  /* ── BOISSONS ── */
+  .boissons-section {
+    padding: 120px 56px;
+    background: var(--dark);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .boissons-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .boissons-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .boissons-header .section-label { color: var(--pearl-mid); }
+  .boissons-header .section-title { color: #fff; }
+  .boissons-header .section-title em { color: var(--pearl-mid); }
+
+  .boissons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .boisson-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 36px 24px;
+    transition: background 0.3s, border-color 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .boisson-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .boisson-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .boisson-card:hover::before { transform: scaleX(1); }
+
+  .boisson-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .boisson-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .boisson-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+  }
+
+  /* ── INFO / CONTACT ── */
+  .info-section {
+    padding: 120px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .info-left .section-title { margin-bottom: 40px; }
+
+  .info-block {
+    margin-bottom: 36px;
+  }
+  .info-block-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .info-block-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+  .info-block-value a {
+    color: var(--dark);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .info-block-value a:hover { color: var(--red); }
+
+  .hours-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--mid);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(201,175,144,0.3);
+    gap: 16px;
+  }
+  .hours-row .day {
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--dark);
+  }
+  .hours-row .time {
+    font-weight: 300;
+    color: var(--text-soft);
+  }
+
+  .map-placeholder {
+    background: var(--cream2);
+    border: 2px solid var(--red);
+    aspect-ratio: 4/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.3s;
+  }
+  .map-placeholder:hover { border-color: var(--red-hover); }
+  .map-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px dashed rgba(168,136,94,0.3);
+  }
+  .map-icon {
+    font-size: 40px;
+    display: block;
+  }
+  .map-addr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--mid);
+    text-align: center;
+    padding: 0 32px;
+    line-height: 1.6;
+  }
+  .map-cta {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 10px 24px;
+    transition: background 0.3s, color 0.3s;
+  }
+  .map-placeholder:hover .map-cta {
+    background: var(--red);
+    color: #fff;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 48px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .footer-logo em {
+    color: var(--red);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .footer-copy {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-social {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-social:hover { color: var(--red); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+    .banhmi-section { grid-template-columns: 1fr; padding: 80px 24px; }
+    .banhmi-visual { position: relative; top: 0; }
+    .boissons-grid { grid-template-columns: 1fr 1fr; }
+    .info-section { grid-template-columns: 1fr; padding: 80px 24px; }
+    .menu-section { padding: 80px 24px; }
+    .band { padding: 16px 24px; }
+    footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+    .price-header, .banhmi-item { grid-template-columns: 1fr repeat(2, 64px); }
+    .price-header span:nth-child(4),
+    .price-header span:nth-child(5),
+    .banhmi-price:nth-child(4),
+    .banhmi-price:nth-child(5) { display: none; }
+    .boissons-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .boissons-section { padding: 80px 24px; }
+  }
+
+  /* ── ENTRANCE ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- BUBBLE BACKGROUND -->
+<div id="bubble-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Tea<em>lyne</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">L'espace</a></li>
+    <li><a href="#menu">Bubble Tea</a></li>
+    <li><a href="#banhmi">Banh Mi</a></li>
+    <li><a href="#contact">Nous trouver</a></li>
+  </ul>
+  <a href="tel:0757823242" class="nav-cta">07 57 82 32 42</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="frame-deco"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Chelles · 77500</div>
+    <h1 class="hero-title">Tea<em>lyne</em></h1>
+    <p class="hero-sub">Bubble Tea & Banh Mi</p>
+    <p class="hero-desc">Un espace cosy et chaleureux au cœur de Chelles — savourez des bubble teas artisanaux et des banh mi généreux, entourés de livres et de fleurs.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Découvrir la carte</a>
+      <a href="#contact" class="btn-outline">Nous trouver</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- BAND -->
+<div class="band">
+  <div class="band-track" id="band-track">
+    <span class="band-item">Bubble Tea artisanal<span class="band-dot"></span></span>
+    <span class="band-item">Banh Mi maison<span class="band-dot"></span></span>
+    <span class="band-item">Coin librairie<span class="band-dot"></span></span>
+    <span class="band-item">Ambiance cosy<span class="band-dot"></span></span>
+    <span class="band-item">56 Rue Louis Eterlet<span class="band-dot"></span></span>
+    <span class="band-item">Bubble Tea artisanal<span class="band-dot"></span></span>
+    <span class="band-item">Banh Mi maison<span class="band-dot"></span></span>
+    <span class="band-item">Coin librairie<span class="band-dot"></span></span>
+    <span class="band-item">Ambiance cosy<span class="band-dot"></span></span>
+    <span class="band-item">56 Rue Louis Eterlet<span class="band-dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual reveal">
+    <div style="position:relative;width:100%;display:flex;align-items:center;justify-content:center;">
+      <!-- BIG COLORFUL BUBBLE TEA ILLUSTRATION — no frame, fills the column -->
+      <svg viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;filter:drop-shadow(0 20px 48px rgba(60,30,10,0.22));">
+        <!-- straw -->
+        <rect x="148" y="0" width="18" height="110" rx="9" fill="#B83025"/>
+        <rect x="150" y="0" width="13" height="110" rx="6" fill="#D84535"/>
+        <rect x="152" y="0" width="4"  height="110" rx="2" fill="rgba(255,255,255,0.18)"/>
+        <!-- cup body outline / white bg -->
+        <path d="M50 100 L75 355 Q82 385 160 385 Q238 385 245 355 L270 100 Z" fill="#FEFAF5" stroke="#D6C4A8" stroke-width="3"/>
+        <!-- liquid fill — rich taro purple -->
+        <path d="M58 126 L78 345 Q85 375 160 375 Q235 375 242 345 L262 126 Z" fill="#B896CC"/>
+        <!-- gradient overlay for depth -->
+        <path d="M58 126 L78 345 Q85 375 160 375 Q235 375 242 345 L262 126 Z" fill="url(#liquidGrad)"/>
+        <defs>
+          <linearGradient id="liquidGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#8B6AAA" stop-opacity="0.4"/>
+            <stop offset="40%"  stop-color="#C9A8E0" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#7A5090" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <!-- milk foam on top -->
+        <path d="M56 112 L58 132 L262 132 L264 112 Z" fill="#F3ECF8"/>
+        <path d="M56 112 Q100 106 160 110 Q220 106 264 112" fill="#F8F3FC" stroke="none"/>
+        <!-- cup highlight left -->
+        <path d="M68 118 L84 320 Q86 340 100 352" stroke="rgba(255,255,255,0.5)" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <!-- tapioca pearls — dark glossy -->
+        <circle cx="115" cy="305" r="18" fill="#2A1005"/>
+        <circle cx="160" cy="318" r="18" fill="#3A1A08"/>
+        <circle cx="205" cy="305" r="18" fill="#2A1005"/>
+        <circle cx="135" cy="272" r="16" fill="#3D1F08"/>
+        <circle cx="183" cy="278" r="16" fill="#2A1005"/>
+        <circle cx="108" cy="270" r="15" fill="#4A2510"/>
+        <circle cx="212" cy="268" r="14" fill="#3A1A08"/>
+        <!-- pearl highlights -->
+        <circle cx="109" cy="298" r="5" fill="rgba(255,255,255,0.28)"/>
+        <circle cx="154" cy="311" r="5" fill="rgba(255,255,255,0.28)"/>
+        <circle cx="199" cy="298" r="5" fill="rgba(255,255,255,0.28)"/>
+        <circle cx="129" cy="265" r="4" fill="rgba(255,255,255,0.22)"/>
+        <circle cx="177" cy="271" r="4" fill="rgba(255,255,255,0.22)"/>
+        <!-- red label band -->
+        <path d="M62 175 L258 175 L255 205 L65 205 Z" fill="#B83025" opacity="0.92"/>
+        <text x="160" y="196" text-anchor="middle" font-family="'Playfair Display',serif" font-size="18" font-style="italic" fill="#FEFAF5" font-weight="400" letter-spacing="1">Tealyne</text>
+        <!-- decorative moon/stars on cup -->
+        <text x="82"  y="155" font-size="14" fill="rgba(201,175,144,0.7)">✦</text>
+        <text x="230" y="160" font-size="11" fill="rgba(201,175,144,0.6)">✦</text>
+        <text x="200" y="145" font-size="8"  fill="rgba(201,175,144,0.5)">✦</text>
+        <text x="95"  y="240" font-size="8"  fill="rgba(255,255,255,0.18)">✦</text>
+        <!-- cup seam line -->
+        <line x1="160" y1="130" x2="160" y2="380" stroke="rgba(180,150,210,0.15)" stroke-width="1" stroke-dasharray="4 8"/>
+        <!-- bottom curve -->
+        <path d="M78 350 Q85 380 160 382 Q235 380 242 350" stroke="#C9AF90" stroke-width="2" fill="none"/>
+        <!-- cup base shadow -->
+        <ellipse cx="160" cy="390" rx="90" ry="12" fill="rgba(60,30,10,0.12)"/>
+      </svg>
+      <div class="about-badge">
+        <strong>★</strong>
+        Fait<br>maison
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content reveal">
+    <div class="section-label">Notre univers</div>
+    <h2 class="section-title">L'endroit où tu <em>veux</em> rester</h2>
+    <p class="about-text">Chez Tealyne, on a imaginé un espace qui mêle la douceur d'un salon de thé, la curiosité d'une librairie et la fraîcheur d'un bar à bubble tea. Chaque détail est pensé pour que vous vous sentiez bien.</p>
+    <div class="about-features">
+      <div class="feature-row">
+        <div class="feature-icon">🧋</div>
+        <div class="feature-text">
+          <strong>Bubble teas artisanaux</strong>
+          Préparés à la commande avec des perles fraîches et des thés de qualité.
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-icon">🥖</div>
+        <div class="feature-text">
+          <strong>Banh Mi généreux</strong>
+          Sandwichs vietnamiens avec des garnitures fraîches et savoureuses.
+        </div>
+      </div>
+      <div class="feature-row">
+        <div class="feature-icon">📚</div>
+        <div class="feature-text">
+          <strong>Coin librairie</strong>
+          Flânez parmi nos livres pendant que votre commande est préparée.
+        </div>
+      </div>
+    </div>
+    <a href="tel:0757823242" class="btn-primary">07 57 82 32 42</a>
+  </div>
+</section>
+
+<!-- MENU BUBBLE TEA -->
+<section class="menu-section" id="menu">
+  <div class="menu-header reveal">
+    <div class="section-label">Notre sélection</div>
+    <h2 class="section-title">Bubble <em>Tea</em></h2>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="menu-tab active" data-tab="all">Tous</button>
+    <button class="menu-tab" data-tab="classic">Classiques</button>
+    <button class="menu-tab" data-tab="fruit">Fruités</button>
+    <button class="menu-tab" data-tab="special">Spéciaux</button>
+  </div>
+
+  <div class="menu-grid reveal">
+    <div class="menu-card" data-tab="classic">
+      <div class="menu-card-accent"></div>
+      <div class="menu-card-tag">Classique</div>
+      <div class="menu-card-name">Taro Milk Tea</div>
+      <div class="menu-card-desc">Lait de taro onctueux, perles de tapioca, douceur naturelle.</div>
+      <div class="menu-card-price">à partir de 5,50 €</div>
+    </div>
+    <div class="menu-card" data-tab="classic">
+      <div class="menu-card-accent"></div>
+      <div class="menu-card-tag">Classique</div>
+      <div class="menu-card-name">Brown Sugar Boba</div>
+      <div class="menu-card-desc">Lait frais, perles caramélisées au sucre brun, effet marbré.</div>
+      <div class="menu-card-price">à partir de 5,50 €</div>
+    </div>
+    <div class="menu-card" data-tab="fruit">
+      <div class="menu-card-accent"></div>
+      <div class="menu-card-tag">Fruité</div>
+      <div class="menu-card-name">Passion Lychee</div>
+      <div class="menu-card-desc">Base thé vert, maracuja, litchi, perles cristal pétillantes.</div>
+      <div class="menu-card-price">à partir de 5,50 €</div>
+    </div>
+    <div class="menu-card" data-tab="fruit">
+      <div class="menu-card-accent"></div>
+      <div class="menu-card-tag">Fruité</div>
+      <div class="menu-card-name">Strawberry Matcha</div>
+      <div class="menu-card-desc">Matcha premium, coulis fraise, mousse de lait légère.</div>
+      <div class="menu-card-price">à partir de 5,50 €</div>
+    </div>
+    <div class="menu-card" data-tab="special">
+      <div class="menu-card-accent"></div>
+      <div class="menu-card-tag">Spécial</div>
+      <div class="menu-card-name">Collector</div>
+      <div class="menu-card-desc">Ultra Pop Soda Cherry, Aloe Vera 500ml, Canette Litchi.</div>
+      <div class="menu-card-price">à partir de 6,00 €</div>
+    </div>
+    <div class="menu-card" data-tab="special">
+      <div class="menu-card-accent"></div>
+      <div class="menu-card-tag">Ultra Ice Tea</div>
+      <div class="menu-card-name">Ultra Ice Tea</div>
+      <div class="menu-card-desc">Thé glacé version XXL — rafraîchissant, intense, inoubliable.</div>
+      <div class="menu-card-price">à partir de 6,40 €</div>
+    </div>
+  </div>
+</section>
+
+<!-- BANH MI -->
+<section style="position:relative;z-index:1;background:var(--cream);">
+  <div class="banhmi-section" id="banhmi">
+    <div class="banhmi-visual reveal">
+      <div class="section-label">Carte Banh Mi</div>
+      <h2 class="section-title" style="margin-bottom:32px;">Nos <em>Banh Mi</em></h2>
+      <div class="banhmi-plate">
+        <!-- FULL OPEN BANH MI SIDE VIEW — no frame -->
+      <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(0 16px 36px rgba(60,30,10,0.20));margin-bottom:20px;">
+        <!-- shadow -->
+        <ellipse cx="240" cy="248" rx="200" ry="12" fill="rgba(60,30,10,0.13)"/>
+        <!-- ── BOTTOM BUN ── -->
+        <path d="M40 160 Q40 215 240 218 Q440 215 440 160 L420 152 L60 152 Z" fill="#E8A020"/>
+        <!-- bottom crust darker edge -->
+        <path d="M40 160 Q40 218 240 220 Q440 218 440 160" fill="none" stroke="#C07810" stroke-width="3"/>
+        <!-- sesame on bottom -->
+        <ellipse cx="100" cy="213" rx="5" ry="2.5" fill="#F5D898" transform="rotate(-15,100,213)"/>
+        <ellipse cx="160" cy="216" rx="5" ry="2.5" fill="#F5D898" transform="rotate(8,160,216)"/>
+        <ellipse cx="240" cy="218" rx="5" ry="2.5" fill="#F5D898"/>
+        <ellipse cx="320" cy="216" rx="5" ry="2.5" fill="#F5D898" transform="rotate(-8,320,216)"/>
+        <ellipse cx="380" cy="212" rx="5" ry="2.5" fill="#F5D898" transform="rotate(12,380,212)"/>
+        <!-- ── FILLING LAYERS ── -->
+        <!-- meat / cha lua — pinkish beige -->
+        <path d="M55 152 Q240 138 425 152 L428 162 Q240 148 52 162 Z" fill="#D4956A"/>
+        <!-- lettuce frills -->
+        <path d="M48 150 Q80 136 120 144 Q160 134 200 142 Q240 134 280 142 Q320 134 360 142 Q400 136 432 148 L432 158 Q400 144 360 152 Q320 142 280 152 Q240 142 200 152 Q160 142 120 154 Q80 144 48 158 Z" fill="#5A9E30"/>
+        <!-- carrot shreds -->
+        <path d="M70 147 Q100 137 130 145" stroke="#F08020" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M75 143 Q105 133 135 141" stroke="#E06818" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M155 143 Q185 133 215 141" stroke="#F08020" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M240 142 Q270 132 300 140" stroke="#E06818" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M315 143 Q345 133 375 141" stroke="#F08020" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <!-- cucumber slices -->
+        <ellipse cx="110" cy="144" rx="22" ry="9"  fill="#6DC44A" stroke="#45881E" stroke-width="1.5"/>
+        <ellipse cx="110" cy="144" rx="10" ry="4"  fill="#96DC72"/>
+        <ellipse cx="180" cy="140" rx="22" ry="9"  fill="#6DC44A" stroke="#45881E" stroke-width="1.5"/>
+        <ellipse cx="180" cy="140" rx="10" ry="4"  fill="#96DC72"/>
+        <ellipse cx="260" cy="140" rx="22" ry="9"  fill="#6DC44A" stroke="#45881E" stroke-width="1.5"/>
+        <ellipse cx="260" cy="140" rx="10" ry="4"  fill="#96DC72"/>
+        <ellipse cx="340" cy="141" rx="22" ry="9"  fill="#6DC44A" stroke="#45881E" stroke-width="1.5"/>
+        <ellipse cx="340" cy="141" rx="10" ry="4"  fill="#96DC72"/>
+        <!-- coriander leaves -->
+        <path d="M138 143 Q145 132 152 140 Q148 148 138 143Z" fill="#2E7018"/>
+        <path d="M142 139 Q150 128 157 136 Q153 144 142 139Z" fill="#3A8820"/>
+        <path d="M218 140 Q225 129 232 137 Q228 145 218 140Z" fill="#2E7018"/>
+        <path d="M298 139 Q305 128 312 136 Q308 144 298 139Z" fill="#3A8820"/>
+        <path d="M372 141 Q379 130 386 138 Q382 146 372 141Z" fill="#2E7018"/>
+        <!-- mayo drizzle -->
+        <path d="M80 148 Q130 140 180 147 Q230 140 280 147" stroke="rgba(255,250,240,0.85)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M290 146 Q340 139 390 146" stroke="rgba(255,250,240,0.85)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- ── TOP BUN ── -->
+        <path d="M45 155 Q30 80 240 55 Q450 80 435 155 Z" fill="#F2B528"/>
+        <path d="M45 155 Q30 80 240 55 Q450 80 435 155" fill="none" stroke="#C47A10" stroke-width="2.5"/>
+        <!-- top bun sheen / highlight -->
+        <path d="M100 88 Q180 62 280 68" stroke="rgba(255,245,190,0.45)" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <path d="M115 100 Q190 78 270 82" stroke="rgba(255,245,210,0.25)" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <!-- sesame on top -->
+        <ellipse cx="140" cy="80"  rx="6" ry="3" fill="#F8E090" transform="rotate(-12,140,80)"/>
+        <ellipse cx="190" cy="68"  rx="6" ry="3" fill="#F8E090" transform="rotate(4,190,68)"/>
+        <ellipse cx="245" cy="63"  rx="6" ry="3" fill="#F8E090"/>
+        <ellipse cx="300" cy="67"  rx="6" ry="3" fill="#F8E090" transform="rotate(-6,300,67)"/>
+        <ellipse cx="350" cy="78"  rx="5" ry="2.5" fill="#F8E090" transform="rotate(10,350,78)"/>
+        <ellipse cx="170" cy="90"  rx="5" ry="2.5" fill="#F8E090" transform="rotate(-18,170,90)"/>
+        <ellipse cx="310" cy="88"  rx="5" ry="2.5" fill="#F8E090" transform="rotate(14,310,88)"/>
+      </svg>
+      <div class="banhmi-plate-title" style="font-family:'Playfair Display',serif;font-size:26px;font-style:italic;color:#2A1508;margin-bottom:6px;">Tealyne Banh Mi</div>
+      <div class="banhmi-plate-sub" style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#7A5035;">Fait avec amour · Chelles</div>
+      <p style="font-size:13px;font-weight:300;color:var(--text-soft);line-height:1.8;margin-top:28px;">Chaque banh mi est préparé à la commande avec une baguette croustillante, des légumes frais et une touche de mayonnaise maison.</p>
+    </div>
+
+    <div class="banhmi-menu reveal">
+      <div class="price-header">
+        <span>Article</span>
+        <span>Classique</span>
+        <span>Collector</span>
+        <span>Ultra Ice</span>
+        <span>Ramune</span>
+      </div>
+
+      <div class="banhmi-item">
+        <div class="banhmi-item-info">
+          <div class="banhmi-item-name">Banh Mi Cha Lua Poulet</div>
+          <div class="banhmi-item-comp">Cha lua poulet, carotte, concombre, coriandre, mayonnaise</div>
+        </div>
+        <div class="banhmi-price">5,00 €</div>
+        <div class="banhmi-price">6,00 €</div>
+        <div class="banhmi-price">6,90 €</div>
+        <div class="banhmi-price highlight">7,60 €</div>
+      </div>
+
+      <div class="banhmi-item">
+        <div class="banhmi-item-info">
+          <div class="banhmi-item-name">Banh Mi Cha Lua Porc</div>
+          <div class="banhmi-item-comp">Cha lua porc, carotte, concombre, coriandre, mayonnaise</div>
+        </div>
+        <div class="banhmi-price">5,00 €</div>
+        <div class="banhmi-price">6,00 €</div>
+        <div class="banhmi-price">6,90 €</div>
+        <div class="banhmi-price highlight">7,60 €</div>
+      </div>
+
+      <div class="banhmi-item">
+        <div class="banhmi-item-info">
+          <div class="banhmi-item-name">Banh Mi Délice Volaille Halal</div>
+          <div class="banhmi-item-comp">Saucisson de volaille halal, carotte, concombre, coriandre, mayonnaise</div>
+        </div>
+        <div class="banhmi-price">5,00 €</div>
+        <div class="banhmi-price">6,00 €</div>
+        <div class="banhmi-price">6,90 €</div>
+        <div class="banhmi-price highlight">7,60 €</div>
+      </div>
+
+      <div class="banhmi-item">
+        <div class="banhmi-item-info">
+          <div class="banhmi-item-name">Banh Mi Thon</div>
+          <div class="banhmi-item-comp">Thon, salade, tomate, mayonnaise</div>
+        </div>
+        <div class="banhmi-price">4,50 €</div>
+        <div class="banhmi-price">5,00 €</div>
+        <div class="banhmi-price">6,40 €</div>
+        <div class="banhmi-price highlight">7,10 €</div>
+      </div>
+
+      <p style="font-size:12px;font-weight:300;color:var(--text-soft);margin-top:20px;line-height:1.8;">
+        <strong style="color:var(--dark);font-weight:500;">Menu Collector :</strong> Ultra Pop Soda Cherry, Aloe Vera 500ml, Canette Aloe Vera Raisin ou Canette Litchi.<br>
+        <strong style="color:var(--dark);font-weight:500;">+ Bouteille d'eau</strong> ajoutée pour 0,70 €.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BOISSONS -->
+<section class="boissons-section" id="boissons">
+  <div class="boissons-inner">
+    <div class="boissons-header reveal">
+      <div>
+        <div class="section-label">Boissons Collector</div>
+        <h2 class="section-title">Nos <em>boissons</em></h2>
+      </div>
+    </div>
+    <div class="boissons-grid reveal">
+      <div class="boisson-card">
+        <span class="boisson-icon">🍒</span>
+        <div class="boisson-name">Ultra Pop Soda Cherry</div>
+        <div class="boisson-desc">Une pétillance intense aux cerises — le combo parfait avec votre banh mi.</div>
+      </div>
+      <div class="boisson-card">
+        <span class="boisson-icon">🌿</span>
+        <div class="boisson-name">Aloe Vera 500ml</div>
+        <div class="boisson-desc">Fraîcheur naturelle et légèreté — l'aloe vera en grande taille.</div>
+      </div>
+      <div class="boisson-card">
+        <span class="boisson-icon">🍇</span>
+        <div class="boisson-name">Canette Aloe Vera Raisin</div>
+        <div class="boisson-desc">La douceur du raisin rencontre la légèreté de l'aloe vera.</div>
+      </div>
+      <div class="boisson-card">
+        <span class="boisson-icon">🍈</span>
+        <div class="boisson-name">Canette Litchi</div>
+        <div class="boisson-desc">Un goût exotique floral et sucré — un classique asiatique adoré.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="info-section">
+    <div class="info-left reveal">
+      <div class="section-label">Nous trouver</div>
+      <h2 class="section-title" style="margin-bottom:40px;">Venez nous <em>rendre visite</em></h2>
+
+      <div class="info-block">
+        <div class="info-block-label">Adresse</div>
+        <div class="info-block-value">56 Rue Louis Eterlet<br>77500 Chelles</div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-label">Téléphone</div>
+        <div class="info-block-value"><a href="tel:0757823242">07 57 82 32 42</a></div>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-label">Horaires</div>
+        <div class="hours-grid">
+          <div class="hours-row"><span class="day">Lundi</span><span class="time">11h – 19h</span></div>
+          <div class="hours-row"><span class="day">Mardi</span><span class="time">11h – 19h</span></div>
+          <div class="hours-row"><span class="day">Mercredi</span><span class="time">11h – 19h</span></div>
+          <div class="hours-row"><span class="day">Jeudi</span><span class="time">11h – 19h</span></div>
+          <div class="hours-row"><span class="day">Vendredi</span><span class="time">11h – 20h</span></div>
+          <div class="hours-row"><span class="day">Samedi</span><span class="time">11h – 20h</span></div>
+          <div class="hours-row"><span class="day">Dimanche</span><span class="time">Fermé</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <a href="https://maps.google.com/?q=56+Rue+Louis+Eterlet+77500+Chelles" target="_blank" class="map-placeholder" style="text-decoration:none;display:block;">
+        <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:2px solid var(--red);display:block;">
+          <!-- map background -->
+          <rect width="480" height="320" fill="#EDE0CC"/>
+          <!-- park zone -->
+          <rect x="20" y="20" width="100" height="70" rx="6" fill="#B8D498" opacity="0.7"/>
+          <text x="70" y="60" text-anchor="middle" font-family="'Jost',sans-serif" font-size="9" fill="#4A7A28" opacity="0.8">Parc</text>
+          <!-- river Marne -->
+          <path d="M0 240 Q120 220 240 235 Q360 250 480 228" stroke="#8BBCDC" stroke-width="18" fill="none" opacity="0.6"/>
+          <path d="M0 240 Q120 220 240 235 Q360 250 480 228" stroke="#A8D0EC" stroke-width="10" fill="none" opacity="0.4"/>
+          <text x="240" y="248" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10" font-style="italic" fill="#4A7090" opacity="0.9">La Marne</text>
+          <!-- blocks / buildings -->
+          <rect x="140" y="30"  width="50" height="35" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="200" y="20"  width="60" height="40" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="270" y="30"  width="45" height="30" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="320" y="20"  width="70" height="45" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="400" y="30"  width="60" height="35" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="30"  cy="110" x="30"  y="110" width="80" height="40" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="130" y="100" width="55" height="35" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="300" y="90"  width="65" height="40" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="380" y="85"  width="80" height="50" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="30"  y="165" width="90" height="45" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="310" y="160" width="70" height="45" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <rect x="395" y="155" width="75" height="50" rx="3" fill="#D6C4A8" stroke="#B8A080" stroke-width="1"/>
+          <!-- main road horizontal -->
+          <rect x="0" y="148" width="480" height="14" fill="#F0E4CC" stroke="#C9AF90" stroke-width="1"/>
+          <line x1="0" y1="155" x2="480" y2="155" stroke="rgba(201,175,144,0.5)" stroke-width="1" stroke-dasharray="20 12"/>
+          <!-- main road vertical -->
+          <rect x="210" y="0" width="12" height="220" fill="#F0E4CC" stroke="#C9AF90" stroke-width="1"/>
+          <line x1="216" y1="0" x2="216" y2="220" stroke="rgba(201,175,144,0.5)" stroke-width="1" stroke-dasharray="20 12"/>
+          <!-- secondary roads -->
+          <rect x="0"   y="76"  width="480" height="8"  fill="#EAD9BE" stroke="#C9AF90" stroke-width="0.5"/>
+          <rect x="100" y="0"   width="8"   height="220" fill="#EAD9BE" stroke="#C9AF90" stroke-width="0.5"/>
+          <rect x="330" y="0"   width="8"   height="220" fill="#EAD9BE" stroke="#C9AF90" stroke-width="0.5"/>
+          <!-- Rue Louis Eterlet label -->
+          <text x="260" y="145" font-family="'Jost',sans-serif" font-size="8" font-weight="500" fill="#8B6340" letter-spacing="0.5">Rue Louis Eterlet</text>
+          <!-- TEALYNE MARKER -->
+          <!-- pin shadow -->
+          <ellipse cx="240" cy="168" rx="10" ry="4" fill="rgba(42,21,8,0.25)"/>
+          <!-- pin body -->
+          <circle cx="240" cy="138" r="20" fill="#B83025"/>
+          <circle cx="240" cy="138" r="14" fill="#D84535"/>
+          <circle cx="236" cy="134" r="5" fill="rgba(255,255,255,0.35)"/>
+          <!-- pin triangle -->
+          <path d="M228 152 L252 152 L240 168 Z" fill="#B83025"/>
+          <!-- cup icon inside pin -->
+          <text x="240" y="143" text-anchor="middle" font-size="12" fill="white">🧋</text>
+          <!-- label bubble -->
+          <rect x="194" y="105" width="92" height="24" rx="12" fill="white" stroke="#B83025" stroke-width="1.5"/>
+          <text x="240" y="121" text-anchor="middle" font-family="'Playfair Display',serif" font-size="11" font-weight="600" fill="#2A1508">Tealyne</text>
+          <!-- "Voir sur Maps" button area -->
+          <rect x="140" y="275" width="200" height="34" rx="4" fill="none" stroke="#B83025" stroke-width="1.5"/>
+          <text x="240" y="297" text-anchor="middle" font-family="'Jost',sans-serif" font-size="11" font-weight="500" letter-spacing="2" fill="#B83025">VOIR SUR MAPS →</text>
+          <!-- scale bar -->
+          <line x1="30" y1="295" x2="80" y2="295" stroke="#A8885E" stroke-width="1.5"/>
+          <line x1="30" y1="290" x2="30" y2="300" stroke="#A8885E" stroke-width="1.5"/>
+          <line x1="80" y1="290" x2="80" y2="300" stroke="#A8885E" stroke-width="1.5"/>
+          <text x="55" y="308" text-anchor="middle" font-family="'Jost',sans-serif" font-size="8" fill="#A8885E">200m</text>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Tea<em>lyne</em></div>
+  <div class="footer-copy">© 2025 Tealyne Bubble Tea · Chelles</div>
+  <div class="footer-socials">
+    <a href="#" class="footer-social">Instagram</a>
+    <a href="#" class="footer-social">Facebook</a>
+  </div>
+</footer>
+
+<script>
+// ── BUBBLE PEARLS BACKGROUND ──
+(function() {
+  const bg = document.getElementById('bubble-bg');
+  // Pearl color palettes — solid dark browns/reds for max visibility on cream bg
+  const palettes = [
+    { base: '90,52,20',   light: '140,90,50' },
+    { base: '61,31,8',    light: '100,60,25' },
+    { base: '184,48,37',  light: '220,90,75' },
+    { base: '120,70,30',  light: '170,115,65' },
+    { base: '50,25,8',    light: '85,50,20'  },
+    { base: '155,95,45',  light: '200,145,90'},
+  ];
+  const count = 70;
+
+  for (let i = 0; i < count; i++) {
+    const pearl = document.createElement('div');
+    pearl.classList.add('pearl');
+
+    const size = Math.random() * 22 + 10; // 10–32px  (bigger!)
+    const left = Math.random() * 100;
+    const delay = Math.random() * 25;
+    const dur   = Math.random() * 16 + 12; // 12–28s
+    // Strong opacity so pearls are clearly visible on cream background
+    const alpha = (Math.random() * 0.30 + 0.45).toFixed(2); // 0.45–0.75
+    const pal   = palettes[Math.floor(Math.random() * palettes.length)];
+
+    pearl.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${left}%;
+      bottom: -${size}px;
+      background: radial-gradient(circle at 32% 32%,
+        rgba(${pal.light},0.6) 0%,
+        rgba(${pal.base},${alpha}) 55%,
+        rgba(${pal.base},${(parseFloat(alpha)*0.7).toFixed(2)}) 100%);
+      animation-delay: -${delay}s;
+      animation-duration: ${dur}s;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.18), inset -2px -2px 5px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.22);
+    `;
+
+    bg.appendChild(pearl);
+  }
+})();
+
+// ── SCROLL REVEAL ──
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => observer.observe(el));
+})();
+
+// ── MENU TABS — WORKING FILTER ──
+(function() {
+  const tabs  = document.querySelectorAll('.menu-tab');
+  const cards = document.querySelectorAll('.menu-card');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const selected = tab.dataset.tab; // 'all' | 'classic' | 'fruit' | 'special'
+
+      cards.forEach(card => {
+        if (selected === 'all' || card.dataset.tab === selected) {
+          card.style.display = '';
+          // small fade-in
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(10px)';
+          requestAnimationFrame(() => {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          });
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+})();
+
+// ── NAV SHRINK ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 60) {
+    nav.style.padding = '12px 56px';
+    nav.style.borderBottomColor = 'rgba(201,175,144,0.6)';
+  } else {
+    nav.style.padding = '20px 56px';
+    nav.style.borderBottomColor = 'var(--warm)';
+  }
+});
+</script>
+</body>
+</html>
